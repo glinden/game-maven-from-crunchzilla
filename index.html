@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang=en>
+  <head>
+	<meta charset=utf-8>
+    <title>Game Maven from Crunchzilla</title>
+	<link rel=icon type="image/png" href=i/favicon.png>
+	<link rel="shortcut icon" href=i/favicon.ico>
+
+    <link rel=stylesheet href=thirdparty/codemirror.css>
+    <link rel=stylesheet href=thirdparty/speechbubble.css>
+	<link rel=stylesheet href=gamemaven.css>
+
+	<meta property="og:title" content="Game Maven from Crunchzilla" />
+	<meta property="og:url" content="http://www.crunchzilla.com/game-maven" />
+    <meta property="og:image" content="http://www.crunchzilla.com/i/gamemaven-icon.png" />
+	<meta property="og:description" content="Game Maven from Crunchzilla is an interactive tutorial that lets anyone experiment with coding and write a few games." />
+	<meta name="description" content="Game Maven from Crunchzilla is an interactive tutorial that lets anyone experiment with coding and write a few games." />
+  </head>
+
+  <body>
+
+	<noscript>
+	  <h2>
+	    Game Maven from Crunchzilla is an interactive tutorial
+	    that lets anyone experiment with coding and write a few
+	    games.<p>
+	    Game Maven from Crunchzilla uses Javascript.
+	    Please enable Javascript if you want to play with Game
+	    Maven.  Otherwise, Game Maven will not be able to play
+	    with you.
+	    <br><br><br>
+	  </h2>
+	</noscript>
+	<div class=not-selectable unselectable=on id=tutor>
+	  <div id=tutor-avatar unselectable=on><img id=tutor-img unselectable=on src=i/tutor0.png /></div>
+	  <div id=tutor-talk unselectable=on>
+				<p class="speech-bubble-blue" unselectable=on id=tutor-message> </p>
+	  </div>
+	</div>
+
+	<div id=code-errors class=not-selectable unselectable=on></div>
+
+	<div style="overflow:hidden;" class=not-selectable unselectable=on>
+    <textarea id=code name=code></textarea>
+    <iframe id=preview></iframe>
+	</div>
+
+	<div class=not-selectable unselectable=on style="overflow: hidden; width: 100%;">
+	  <div style="float: left; width: 100px;">
+		<span class="button not-selectable" title="Reset the code of this lesson" unselectable=on id=reset-button>RESET</span>
+	  </div>
+	  <div id=lesson-section-div>
+		<span id=lesson-section></span>
+	  </div>
+	  <div style="float: right;">
+		<span id=lesson-number style="display: none;">Lesson 1</span>
+		<span class="button not-selectable" title="Go back one lesson" style="margin-right:10px;" unselectable=on id=back-button>BACK</span>
+      </div>
+	</div>
+	<div class=not-selectable unselectable=on style="overflow: hidden; width: 100%; line-height: 10px;">
+	  <div style="margin-left: 10px; text-align: center;">
+		<progress id=lesson-progress max=100 value=0 title="0% completed"></progress>
+	  </div>
+	</div>
+	<div id=info-links class=not-selectable unselectable=on>
+	  <span class=info-link unselectable=on>How to Play</span>
+	  |
+	  <span class=info-link unselectable=on>Lesson Sections</span>
+	  |
+	  <span class=info-link unselectable=on>About</span>
+	  |
+	  <span class=info-link unselectable=on>FAQ</span>
+	  |
+	  <span class=info-link unselectable=on>Terms of Use</span>
+	  |
+	  <span class=info-link unselectable=on>Privacy</span>
+	  |
+	  <span class=info-link unselectable=on>Contact</span>
+	  |
+	  <span unselectable=on>&copy; 2015</span>
+	</div>
+
+	<div id=how-to-play style="display: none;">
+	  <h3>How to Play</h3> 
+	  Game Maven from Crunchzilla is the third and most advanced
+	  programming tutorial in the Crunchzilla series. It teaches teens
+	  and curious adults a little about programming by helping them
+	  code a few casual games in Javascript.
+	  <br><br>
+	  It's easy to play. Follow the instructions and do what
+	  Game Maven says.  Feel free to occasionally skip to the next lesson
+	  if there is something you don't want to do.
+	  You can always come back to it later!
+	  <br><br>Click on the Reset button if you really mess up your
+	  code and want to start over on a lesson. Click on the Back button 
+	  to go back to a previous lesson. You can jump to a specific lesson
+	  or back to the beginning using the "Lesson Sections" link.
+	  <br><br>
+	  Game Maven saves what lesson you are on, so feel free to stop
+	  at any time and come back later.  As long as you come back on the
+	  same browser on the same machine, you'll get back to your lesson.
+	  <br><br> 
+	  If you haven't done <a href="http://crunchzilla.com/code-maven">Code Maven</a> 
+	  from Crunchzilla yet, you probably should do that
+	  first unless you already have a lot of programming experience. 
+	  Game Maven assumes you mostly know what Code Maven covered and 
+	  might be really hard if you don't.
+	  Besides, Code Maven from Crunchzilla is fun
+	  too, you wouldn't want to miss it!
+	  <br><br>
+	  Have fun!
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=lesson-sections style="display: none;">
+	  <h3>Jump to a Lesson Section</h3>
+	  <ol id=lesson-sections-list>
+	  </ol>
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=faq style="display: none;">
+	  <h3>Frequently Asked Questions</h3>
+	  <b>What is the c in things like <code>c.save()</code>?</b>
+	  <br><br>
+	  <code>c</code> is a variable Game Maven creates for you that contains the Canvas' 2D context.
+	  The code that creates the variable <code>c</code>, which is hidden, looks like
+	  <br><br>
+	  <code>var c = document.getElementById('pane').getContext('2d');</code>
+	  <br><br>
+	  <b>How can I save my code and use it outside of Game Maven?</b>
+	  <br><br>
+	  Short answer: You can copy-and-paste your code and then load that code in
+	  an HTML file (either loading a separate Javascript file or inlining the
+	  Javascript in your HTML file).
+	  <br><br>
+	  Longer answer: A minimal HTML file that works would look like this:
+	  <br><br>
+	  <code>
+		&lt;html&gt;&lt;body&gt;
+		<br>
+		&lt;canvas id=pane width=400 height=400&gt;&lt;/canvas&gt;
+		<br>
+		&lt;script&gt;
+		<br>
+		var c = document.getElementById(&#39;pane&#39;).getContext(&#39;2d&#39;);
+		<br>
+		<br>
+		// PASTE YOUR CODE HERE
+		<br>
+		<br>
+		&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code>
+	  <br><br>
+	  If you copy that into a file, then copy-and-paste your game code into it, then
+	  save the file with a filename ending in .html, you should be able to load the
+	  file in any web browser and play your game.
+	  <br><br>
+	  <b>Is there any other code that is hidden from me?</b>
+	  <br><br>
+	  There is also a bit of hidden code to try to stop animations when you
+	  change lessons and the code you write is instrumented to try to
+	  prevent infinite loops. You shouldn't need those to run your game
+	  outside of Game Maven.
+	  <br><br>
+	  <b>Why aren't you telling me more about the syntax and terminology of Javascript?</b>
+	  <br><br>
+	  There are already a lot of tutorials and textbooks out there that teach Javascript
+	  programming by explaining what a variable is, what variable scope is, what the syntax
+	  of an if statement looks like, how each of the operators work, and so on. If you want
+	  that, there are many choices available, many of which are excellent supplements to
+	  Game Maven.
+	  <br><br>
+	  What is hard to find is a tutorial that is fun, immersive, and gets you immediately 
+	  building cool things. Game Maven skips a lot of the syntax and explanation you 
+	  can get elsewhere (Google for it when you need it) and instead jumps straight into
+	  the fun of what you can do if you learn to code.
+	  <br><br>
+	  <b>Why doesn't this work perfectly on an iPad (or other mobile device)?</b>
+	  <br><br>
+	  Game Maven will load on many mobile devices, might even be a bit playable
+	  depending on your device, but it isn't designed for mobile. Why not?
+	  <br><br>
+	  Mostly because it is hard to type on mobile. Writing large amounts on a mobile
+	  device is difficult, and it is even worse when what you are trying to write is code
+	  and you need to keep looking at other parts of the code. Trying to write
+	  large amounts of traditional code on a mobile device is not a good experience.
+	  <br><br>
+	  Because of that, no one seems to have created a great app yet for learning to code on
+	  mobile, but there are good apps out there that teach programming 
+	  concepts (such as Hopscotch, Move the Turtle, and Cargo-bot).
+	  <br><br>
+	  <b>Can I use Game Maven offline (when not connected to the internet)?</b>
+	  <br><br>
+	  Sure!  Game Maven only uses the internet at the very
+	  beginning, to load the website, and then never contacts the
+	  internet again.
+	  <br><br>
+	  So, for example, you can load Game Maven on a
+	  laptop, then go on an airplane or walk to a park where there is
+	  no internet connection, open your laptop there, and use Game
+	  Maven without the internet.  It even still saves your place so
+	  you get back to the same lesson when you return!  You don’t need
+	  an internet connection except at the very beginning
+	  when the website loads.
+	  <br><br>
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=about style="display: none;">
+	  <h3>About</h3>
+	  Game Maven from Crunchzilla is live Javascript programming for
+	  fun.  It's an interactive tutorial with a focus on action over explanation.
+	  When you work through Game Maven, you dive right into coding, and the
+	  code you write immediately yields visible results.
+	  <br><br>
+	  Game Maven from Crunchzilla  is the most advanced programming
+	  tutorial in Crunchzilla series. Game Maven teaches some of the
+	  basics of programming casual video games and is intended for
+	  teens or adults who either have already done most of Code Maven or 
+	  already have some programming experience.  <a href="http://crunchzilla.com/code-maven">Code Maven</a> assumes
+	  no prior programming experience and teaches
+	  teens and curious adults a bit about coding in a fun way,
+	  including lots of experimenting 
+	  with graphics and animation.  <a href="http://crunchzilla.com/code-monster">Code Monster</a>, the lightest and easiest 
+	  tutorial, is like Code Maven but intended for pre-teen children (ages 9-14).
+	  <br><br> 
+	  Game Maven is intended to be a fun and exciting introduction to
+	  programming concepts and building computer games.  It is a first 
+	  step in learning to program. It is
+	  not intended to teach a lot of computer science and programming, but
+	  might convince people who might never have thought they could
+	  program that coding is fun and something they might be able to do.
+	  <br><br>
+	  Game Maven from Crunchzilla is based in Seattle, WA.  It is part of the
+	  Crunchzilla suite of game and educational projects being developed by
+	  Geeky Ventures.
+	  <br><br>
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=terms-of-use style="display: none;">
+	  <h3>Terms of Use</h3>
+	  "Game Maven" is a website provided by Geeky Ventures.
+	  In order to use the Site, you must accept the terms set forth below.
+	  If you are a minor, your parent or guardian must accept the terms and
+	  full responsibility for your use of the website.  THESE TERMS OF
+	  SERVICE CONSTITUTE A BINDING LEGAL AGREEMENT BETWEEN YOU AND GEEKY
+	  VENTURES.  BY USING THE WEBSITE, YOU AGREE TO THESE TERMS.
+	  <br><br>
+	  The website HTML, text, images, audio, video, software or other
+	  content that is made available on this website are the property of
+	  Geeky Ventures or its content suppliers.  Before you use this content
+	  in some way please take care to ensure that you have the relevant
+	  rights and permissions.  You are welcome to display on your computer,
+	  download, and print pages from this website for personal and educational
+	  use only.
+	  <br><br>
+	  THE WEBSITE IS PROVIDED "AS IS".  Your use of this website is at your
+	  own risk.  Geeky Ventures disclaims all warranties, expressed or
+	  implied, including without limitation, warranties of merchantability
+	  and fitness of a particular purpose.  Geeky Ventures disclaims
+	  liability for any direct, indirect, incidental, special,
+	  consequential, exemplary, punitive or other damages, or lost profits,
+	  that may result directly or indirectly from the use of the
+	  website. This includes, without limitation, any damage to computer
+	  systems, hardware or software, loss of data, or any other performance
+	  failures, any errors, bugs, viruses or other defects that result from,
+	  or are associated with the use of this website.
+	  <br><br>
+	  Geeky Ventures may modify this agreement at any time, and such
+	  modifications shall be effective immediately.
+	  <br><br>
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=privacy style="display: none;">
+	  <h3>Privacy Policy</h3> 
+
+	  Game Maven is extremely protective of privacy.  Game Maven
+	  keeps almost no information about people who use the website.
+	  <br><br>
+	  Game Maven does not require registration.  It does not have
+	  your e-mail address.  It does not know who you are.  When you
+	  use Game Maven, you are essentially anonymous.
+	  <br><br>
+	  Game Maven does not use cookies.  If you leave the website and
+	  come back, there is a feature that will get you back to the
+	  lesson you were on.  That does not use cookies.  It is done
+	  using HTML5 Local Storage, which stores data on your machine,
+	  not remotely on the webservers.  Game Maven does not even know
+	  what lesson you were on or how many lessons people using
+	  Game Maven have completed, and it is a bit of a shame that we do
+	  not, but that is how seriously we take privacy.
+	  <br><br> 
+	  Like nearly all websites, Game Maven has web server logs that
+	  may contain the IP address used to access the web server.  That
+	  is standard in nearly all webservers and not an attempt at data
+	  collection.
+	  <br><br>
+	  In keeping with standard language in privacy policies,
+	  personally identifiable information will not be disclosed to a
+	  third party unless required by law and we may update this policy
+	  from time to time at our sole discretion.
+	  <br><br>
+	  We are very protective of your privacy.  We like it that way.	  
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=contact style="display: none;">
+	  <h3>Contact</h3>
+	  Game Maven can be reached at gamer@crunchzilla.com
+	  <br><br>
+	  Game Maven would love to hear your suggestions for how she can
+	  teach better.  Game Maven doesn't like complaints, but you can send
+	  them to her too, and she will get very sad.
+	  <br><br>
+	  Game Maven from Crunchzilla is a product of Geeky Ventures.
+	  Geeky Ventures is based in Seattle, WA.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	
+	<div id=old-browser-warning style="display: none;">
+	  <h3>Old Browser Warning</h3>
+	  Oh my.  Game Maven does not like your web browser.  Your browser
+	  is really old.  You need a new web browser.
+	  <br><br> 
+	  Game Maven likes <a href="http://google.com/chrome">Chrome</a>
+	  and <a href="http://mozilla.com/firefox">Firefox</a>.  You can
+	  play with Game Maven if you have those.  Go get them and let's play!
+	  <br><br>
+	  If you want to try to use Game Maven anyway, go ahead and try, but
+	  Game Maven probably will not come out to play.  Your web browser
+	  isn't good.  She does not like it at all.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+
+    <script src=thirdparty/codemirror.js></script>
+    <script src=thirdparty/codemirror-javascript.js></script>
+    <script src=thirdparty/jshint.js></script>
+	<script src=thirdparty/jquery-1.7.2.min.js></script>
+	<script src=thirdparty/jquery.simplemodal.1.4.2.min.js></script>
+	<script src=gamemaven-lessons.js></script>
+	<script src=gamemaven.js></script>
+
+  </body>
+</html>
